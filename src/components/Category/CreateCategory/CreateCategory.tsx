@@ -15,6 +15,7 @@ import { useForm, Controller } from 'react-hook-form';
 import { CreateCategoryFormData, createCategoryFormSchema } from './CreateCategoryFormSchema';
 import { yupResolver } from '@hookform/resolvers/yup';
 import type { FocusEvent } from 'react';
+import toast from 'react-hot-toast';
 
 const CreateCategory = () => {
   const addCategory = useCategoryStore((state) => state.add);
@@ -48,6 +49,7 @@ const CreateCategory = () => {
 
   const onSubmit = (data: CreateCategoryFormData) => {
     addCategory(data.name, data.color ?? null);
+    toast.success('Now you have one more category');
     reset();
   };
 

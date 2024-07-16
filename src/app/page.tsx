@@ -1,3 +1,13 @@
+import CreateCategory from '@/components/Category/CreateCategory/CreateCategory';
+import ManageCategory from '@/components/Category/ManageCategory/ManageCategory';
+
+// min-h-screen
 export default function Home() {
-  return <main className='flex min-h-screen flex-col items-center justify-between p-24'>Work Logger</main>;
+  return (
+    <main className='flex flex-col justify-between gap-7 '>
+      Work Logger
+      <CreateCategory />
+      <ManageCategory />
+    </main>
+  );
 }
