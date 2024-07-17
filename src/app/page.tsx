@@ -1,5 +1,6 @@
 import CreateCategory from '@/components/Category/CreateCategory/CreateCategory';
 import ManageCategory from '@/components/Category/ManageCategory/ManageCategory';
+import AddTask from '@/components/Tracker/AddTask/AddTask';
 
 // min-h-screen
 export default function Home() {
@@ -8,6 +9,7 @@ export default function Home() {
       Work Logger
       <CreateCategory />
       <ManageCategory />
+      <AddTask />
     </main>
   );
 }
