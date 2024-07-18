@@ -2,12 +2,14 @@ import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import { v4 as uuidv4 } from 'uuid';
 
+export type Category = {
+  id: string;
+  name: string;
+  color: string | null;
+};
+
 export type CategoryState = {
-  categories: {
-    id: string;
-    name: string;
-    color: string | null;
-  }[];
+  categories: Category[];
 };
 
 export type CategoryAction = {
