@@ -17,7 +17,7 @@ import {
   TimeInput,
   useDisclosure,
 } from '@nextui-org/react';
-import { parseAbsoluteToLocal, Time } from '@internationalized/date';
+import { toCalendarDate, Time, toCalendarDateTime, fromDate } from '@internationalized/date';
 import { I18nProvider } from '@react-aria/i18n';
 import { useCategoryStore } from '@/lib/store/categories';
 import { getContrast } from '@/utils';
@@ -42,7 +42,7 @@ const AddTask = () => {
     defaultValues: {
       title: '',
       date: new Date(),
-      from: new Time(new Date().getHours(), new Date().getMinutes()) as unknown as string,
+      from: new Time(new Date().getHours(), new Date().getMinutes(), new Date().getSeconds()) as unknown as string,
       to: '',
       category: {
         id: '',
@@ -99,8 +99,12 @@ const AddTask = () => {
                         <DatePicker
                           // dir='rtl'
                           showMonthAndYearPickers
-                          value={parseAbsoluteToLocal(field.value.toISOString() || new Date().toISOString())}
-                          onChange={(dateValue) => field.onChange(dateValue)}
+                          // value={parseZonedDateTime(field.value.toISOString() || new Date().toISOString())}
+                          value={fromDate(field.value, 'Asia/Tehran')}
+                          onChange={(dateValue) => {
+                            // console.log(dateValue.toDate('Asia/Tehran'));
+                            field.onChange(dateValue.toDate());
+                          }}
                           label='Date'
                           granularity='day'
                           // type='text'
@@ -122,7 +126,9 @@ const AddTask = () => {
                       <TimeInput
                         // dir='rtl'
                         // value={!field.value ? new Time(new Date().getHours(), new Date().getMinutes()) : field.value}
-                        value={new Time((field.value as any).hour, (field.value as any).minute)}
+                        value={
+                          new Time((field.value as any).hour, (field.value as any).minute, (field.value as any).second)
+                        }
                         onChange={(dateValue) => field.onChange(dateValue)}
                         label='From'
                         hourCycle={24}
