@@ -1,6 +1,7 @@
 import CreateCategory from '@/components/Category/CreateCategory/CreateCategory';
 import ManageCategory from '@/components/Category/ManageCategory/ManageCategory';
 import AddTask from '@/components/Tracker/AddTask/AddTask';
+import TaskList from '@/components/Tracker/TaskList/TaskList';
 
 // min-h-screen
 export default function Home() {
@@ -10,6 +11,7 @@ export default function Home() {
       <CreateCategory />
       <ManageCategory />
       <AddTask />
+      <TaskList />
     </main>
   );
 }
