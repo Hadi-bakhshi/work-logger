@@ -35,6 +35,6 @@ export const useCategoryStore = create<CategoryState & CategoryAction>()(
         return Boolean(duplicateCategory);
       },
     }),
-    { name: 'category-store', skipHydration: true }
+    { name: 'category-store', skipHydration: false }
   )
 );
