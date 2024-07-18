@@ -22,9 +22,13 @@ import { I18nProvider } from '@react-aria/i18n';
 import { useCategoryStore } from '@/lib/store/categories';
 import { getContrast } from '@/utils';
 import toast from 'react-hot-toast';
+import { Task, useTaskStore } from '@/lib/store/tasks';
 const AddTask = () => {
   const categoryList = useCategoryStore((state) => state.categories);
+  const addToTask = useTaskStore((state) => state.add);
+
   const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
+
   const {
     control,
     formState: { errors },
@@ -51,6 +55,7 @@ const AddTask = () => {
 
   const onSubmit = (data: AddTaskFormData) => {
     console.log({ data });
+    addToTask(data as unknown as Task);
     reset();
     toast.success("You're task has been created");
     onClose();

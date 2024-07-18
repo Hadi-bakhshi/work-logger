@@ -14,11 +14,11 @@ export type Task = {
   title: string;
 };
 
-export type TaskState = {
+type TaskState = {
   tasks: Task[];
 };
 
-export type TaskAction = {
+type TaskAction = {
   add: (data: Omit<Task, 'id'>) => void;
   stop: (id: string, to: string) => void;
   delete: (id: string) => void;
