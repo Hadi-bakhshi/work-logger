@@ -17,7 +17,7 @@ import {
   TimeInput,
   useDisclosure,
 } from '@nextui-org/react';
-import { parseAbsoluteToLocal, parseDate, parseTime, Time } from '@internationalized/date';
+import { parseAbsoluteToLocal, Time } from '@internationalized/date';
 import { I18nProvider } from '@react-aria/i18n';
 import { useCategoryStore } from '@/lib/store/categories';
 import { getContrast } from '@/utils';
