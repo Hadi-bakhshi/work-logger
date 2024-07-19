@@ -1,0 +1,59 @@
+.nyx_table__top {
+  .nyx_table__title {
+    font-size: 1.25rem;
+    font-weight: bold;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .nyx_table__title__dark {
+    color: #fff;
+  }
+  .nyx_table__title__light {
+    color: #111;
+  }
+
+  .nyx_table__header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    height: 50px;
+
+    .nyx_form {
+      height: 100%;
+
+      // .nyx_form__input {
+      //   border: 1px solid rgb(175, 175, 175);
+      //   outline: none;
+      //   border-radius: 1rem;
+      //   height: 70%;
+      //   direction: rtl;
+      //   font-size: 1rem;
+
+      //   &:hover,
+      //   &:focus {
+      //     border: 1px solid black;
+      //   }
+      // }
+    }
+    .nyx_table__header__middle-component {
+    }
+  }
+  .nyx_actions {
+    display: flex;
+    gap: 1rem;
+
+    button {
+      // background-color: rgb(255, 156, 0, 1);
+      // color: white;
+      // border: 1px solid rgb(226, 153, 34);
+      // cursor: pointer;
+      // height: 2.5rem;
+      // width: 4rem;
+    }
+
+    .nyx_actions__CTAcomponent {
+    }
+  }
+}

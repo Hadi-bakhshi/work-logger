@@ -1,0 +1,44 @@
+.skeleton-loading {
+  display: flex;
+  flex-direction: column;
+
+  .skelton-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .short {
+      width: 15%;
+    }
+  }
+
+  @mixin skeleton-item {
+    height: 30px;
+    width: 100%;
+    margin-bottom: 10px;
+    background-color: #c0c0c0;
+    border-radius: 5px;
+    animation: pulse 1s infinite alternate;
+  }
+
+  .skeleton-item-light {
+    @include skeleton-item();
+  }
+
+  .skeleton-item-dark {
+    @include skeleton-item();
+    background-color: rgb(25, 24, 66);
+  }
+
+  @keyframes pulse {
+    0% {
+      opacity: 0.3;
+    }
+    50% {
+      opacity: 0.7;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+}
