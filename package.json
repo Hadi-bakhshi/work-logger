@@ -13,6 +13,8 @@
     "@internationalized/date": "^3.5.4",
     "@nextui-org/react": "^2.4.2",
     "@react-aria/i18n": "^3.11.1",
+    "ag-grid-community": "^32.0.2",
+    "ag-grid-react": "^32.0.2",
     "framer-motion": "^11.3.2",
     "next": "14.2.5",
     "react": "^18",
