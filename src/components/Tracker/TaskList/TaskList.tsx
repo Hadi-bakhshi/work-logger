@@ -1,114 +1,158 @@
 'use client';
-import { Category } from '@/lib/store/categories';
-import { Task, useTaskStore } from '@/lib/store/tasks';
-import { DateDuration } from '@internationalized/date';
-import {
-  Table,
-  TableHeader,
-  TableColumn,
-  TableBody,
-  TableRow,
-  TableCell,
-  Tooltip,
-  getKeyValue,
-  Button,
-} from '@nextui-org/react';
-import { useCallback, type Key } from 'react';
 
-const columns = [
-  { name: 'Title', uid: 'title' },
-  { name: 'Category', uid: 'category' },
-  { name: 'Date', uid: 'date' },
-  { name: 'From', uid: 'from' },
-  { name: 'To', uid: 'to' },
-  { name: 'Description', uid: 'description' },
-  { name: 'Actions', uid: 'actions' },
-];
+import { ColDef } from 'ag-grid-community';
+
+// import { Category } from '@/lib/store/categories';
+import { Task, useTaskStore } from '@/lib/store/tasks';
+import { Button } from '@nextui-org/react';
+import NyxAgGrid from '@/components/AgGrid/NyxAgGrid';
 
 const TaskList = () => {
   const taskList = useTaskStore((state) => state.tasks);
   const stopTask = useTaskStore((state) => state.stop);
   const deleteTask = useTaskStore((state) => state.delete);
-
-  const renderCell = useCallback((task: Task, columnKey: Key, id: string): JSX.Element => {
-    const cellValue = task[columnKey as keyof Task];
-
-    switch (columnKey) {
-      case 'title':
+  console.log({ taskList });
+  const columns: ColDef[] = [
+    {
+      field: 'title',
+      headerName: 'Title',
+      flex: 1,
+      minWidth: 200,
+      cellRenderer: (input: ColDef['cellRenderer']) => {
         return (
-          <div>
-            <h6>{cellValue as string}</h6>
+          <div className='flex justify-start items-center h-full'>
+            <h6>{input.data.title}</h6>
           </div>
         );
-      case 'category':
+      },
+    },
+    {
+      field: 'category',
+      headerName: 'Category',
+      flex: 1,
+      minWidth: 200,
+      cellRenderer: (input: ColDef['cellRenderer']) => {
         return (
-          <div>
-            <h6>{(cellValue as Category).name}</h6>
+          <div className='flex justify-center items-center h-full'>
+            <h6>{input.data.category.name}</h6>
           </div>
         );
-      case 'date':
+      },
+    },
+    {
+      field: 'date',
+      headerName: 'Date',
+      flex: 1,
+      minWidth: 70,
+      // valueFormatter:(v) => v.value,
+      cellRenderer: (input: ColDef['cellRenderer']) => {
         return (
-          <div>
-            <h6>{new Date(cellValue as Date).toLocaleDateString('fa-IR', { timeZone: 'Asia/Tehran' })}</h6>
+          <div className='flex justify-center items-center h-full'>
+            <h6>{new Date(input.data.date as Date).toLocaleDateString('fa-IR', { timeZone: 'Asia/Tehran' })}</h6>
           </div>
         );
-      case 'from':
+      },
+    },
+    {
+      field: 'from',
+      headerName: 'From',
+      flex: 1,
+      minWidth: 70,
+      cellRenderer: (input: ColDef['cellRenderer']) => {
         return (
-          <div>
-            <h6>{cellValue as string}</h6>
+          <div className='flex justify-center items-center h-full'>
+            <h6>{input.data.from}</h6>
           </div>
         );
-      case 'to':
+      },
+    },
+    {
+      field: 'to',
+      headerName: 'To',
+      flex: 1,
+      minWidth: 70,
+      cellRenderer: (input: ColDef['cellRenderer']) => {
         return (
-          <div>
-            <h6>{(cellValue as string) || 'In Progress'}</h6>
+          <div className='flex justify-center items-center h-full'>
+            <h6>{input.data.to || 'In Progress'}</h6>
           </div>
         );
-      case 'description':
+      },
+    },
+    {
+      field: 'description',
+      headerName: 'Description',
+      flex: 1,
+      minWidth: 200,
+      cellRenderer: (input: ColDef['cellRenderer']) => {
         return (
-          <div>
-            <h6>{(cellValue as string) || '-'}</h6>
+          <div className='flex justify-center items-center h-full'>
+            <h6>{input.data.description || '-'}</h6>
           </div>
         );
-      case 'actions':
+      },
+    },
+    {
+      headerName: 'Actions',
+      flex: 1,
+      minWidth: 200,
+      pinned: 'right',
+      lockPinned: true,
+      cellRenderer: (input: ColDef['cellRenderer']) => {
         return (
-          <div>
+          <div className='flex justify-center items-center h-full'>
             <Button
               variant='flat'
               color='secondary'
               onPress={() =>
-                stopTask(id, `${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}`)
+                stopTask(
+                  input.data.id,
+                  `${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}`
+                )
               }
             >
               stop
             </Button>
-            <Button variant='light' color='danger' onPress={() => deleteTask(id)}>
+            <Button variant='light' color='danger' onPress={() => deleteTask(input.data.id)}>
               remove
             </Button>
           </div>
         );
-      default:
-        return <div>{cellValue as string}</div>;
-    }
-  }, []);
+      },
+    },
+  ];
 
   return (
-    <Table isStriped isHeaderSticky aria-label='List of your tasks'>
-      <TableHeader columns={columns}>
-        {(column) => (
-          <TableColumn key={column.uid} align={column.uid === 'actions' ? 'center' : 'start'}>
-            {column.name}
-          </TableColumn>
-        )}
-      </TableHeader>
-      <TableBody items={taskList.sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime())}>
-        {(item) => (
-          <TableRow key={item.id}>
-            {(columnKey) => <TableCell>{renderCell(item, columnKey, item.id)}</TableCell>}
-          </TableRow>
-        )}
-      </TableBody>
-    </Table>
+    <div className='w-full h-[800px] flex justify-center items-center gap-4 p-4'>
+      <div className='ag-theme-quartz w-full h-full'>
+        <NyxAgGrid
+          toolbar
+          pagination
+          paginationAutoPageSize
+          rowHeight={50}
+          agGridClassName={
+            // theme.themeId === ThemesTypes.DARK ? 'ag-theme-alpine-dark' :
+            'ag-theme-alpine'
+          }
+          search={true}
+          // loading={agencyUserDataLoading}
+          rows={taskList || []}
+          columns={columns}
+          // CTAComponent={
+          //   <Button
+          //     color='success'
+          //     className='text-white'
+          //     onClick={() => {
+          //       onOpenAgencyUserCreate();
+          //     }}
+          //   >
+          //     <span>افزودن کاربر</span>
+          //     <span className='text-2xl'>+</span>
+          //   </Button>
+          // }
+        />
+      </div>
+    </div>
   );
 };
 
